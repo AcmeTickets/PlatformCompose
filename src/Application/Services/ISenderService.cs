@@ -1,4 +1,4 @@
-namespace {{DomainName}}.Application.Services;
+namespace PlatformCompose.Application.Services;
 
 public interface ISenderService
 {

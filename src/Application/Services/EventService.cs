@@ -1,11 +1,11 @@
-using {{DomainName}}.Application.Commands;
-using {{DomainName}}.Application.DTOs;
-using {{DomainName}}.Domain.Repositories;
-using {{DomainName}}.Domain.Services;
-using {{DomainName}}.Domain.Entities;
-using {{DomainName}}.Domain.Events;
+using PlatformCompose.Application.Commands;
+using PlatformCompose.Application.DTOs;
+using PlatformCompose.Domain.Repositories;
+using PlatformCompose.Domain.Services;
+using PlatformCompose.Domain.Entities;
+using PlatformCompose.Domain.Events;
 
-namespace {{DomainName}}.Application.Services;
+namespace PlatformCompose.Application.Services;
 
 public class EventService : IEventService
 {

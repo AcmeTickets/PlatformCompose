@@ -1,4 +1,4 @@
-namespace {{DomainName}}.Domain.Services;
+namespace PlatformCompose.Domain.Services;
 
 public interface IExternalService
 {

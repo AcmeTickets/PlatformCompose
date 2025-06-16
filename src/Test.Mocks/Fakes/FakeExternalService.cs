@@ -1,6 +1,6 @@
-using {{DomainName}}.Domain.Services;
+using PlatformCompose.Domain.Services;
 
-namespace {{DomainName}}.Test.Mocks.Fakes;
+namespace PlatformCompose.Test.Mocks.Fakes;
 
 public class FakeExternalService : IExternalService
 {

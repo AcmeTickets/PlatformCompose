@@ -1,6 +1,6 @@
-using {{DomainName}}.Domain.Entities;
+using PlatformCompose.Domain.Entities;
 
-namespace {{DomainName}}.Domain.Repositories;
+namespace PlatformCompose.Domain.Repositories;
 
 public interface IEventRepository
 {

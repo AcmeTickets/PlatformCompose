@@ -1,12 +1,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NServiceBus;
-using {{DomainName}}.Application.Services;
-using {{DomainName}}.Infrastructure;
-using {{DomainName}}.Infrastructure.Services;
-using {{DomainName}}.Domain.Repositories;
-using {{DomainName}}.Domain.Services;
-using {{DomainName}}.Domain.Events;
+using PlatformCompose.Application.Services;
+using PlatformCompose.Infrastructure;
+using PlatformCompose.Infrastructure.Services;
+using PlatformCompose.Domain.Repositories;
+using PlatformCompose.Domain.Services;
+using PlatformCompose.Domain.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,8 +69,8 @@ await app.RunAsync();
 // NServiceBus configuration helper
 EndpointConfiguration ConfigureNServiceBus(WebApplicationBuilder builder)
 {
-    var endpointName = "{{DomainName}}.Api";
-    var messageEndpoint = "{{DomainName}}.Message";
+    var endpointName = "PlatformCompose.Api";
+    var messageEndpoint = "PlatformCompose.Message";
     return builder.Environment.IsDevelopment()
         ? NServiceBusConfigurator.DevelopmentConfiguration(
             builder.Configuration,

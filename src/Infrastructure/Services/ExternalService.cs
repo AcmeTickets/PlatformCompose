@@ -1,8 +1,8 @@
-using {{DomainName}}.Domain.Services;
+using PlatformCompose.Domain.Services;
 using System.Net.Http;
 using System.Text.Json;
 
-namespace {{DomainName}}.Infrastructure.Services;
+namespace PlatformCompose.Infrastructure.Services;
 
 public class ExternalService : IExternalService
 {

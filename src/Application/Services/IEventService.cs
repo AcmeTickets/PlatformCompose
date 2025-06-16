@@ -1,7 +1,7 @@
-using {{DomainName}}.Application.Commands;
-using {{DomainName}}.Application.DTOs;
+using PlatformCompose.Application.Commands;
+using PlatformCompose.Application.DTOs;
 
-namespace {{DomainName}}.Application.Services;
+namespace PlatformCompose.Application.Services;
 
 public interface IEventService
 {

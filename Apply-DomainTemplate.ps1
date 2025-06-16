@@ -50,4 +50,19 @@ foreach ($proj in $projFiles) {
     }
 }
 
+# 5. Create appsettings.Development.json in each project folder if it doesn't exist, using appsettings.json as a template
+$projectFolders = @(
+    ".\src\Api",
+    ".\src\App",
+    ".\src\Message"
+)
+foreach ($folder in $projectFolders) {
+    $appSettingsPath = Join-Path $folder "appsettings.json"
+    $devSettingsPath = Join-Path $folder "appsettings.Development.json"
+    if ((Test-Path $appSettingsPath) -and -not (Test-Path $devSettingsPath)) {
+        Get-Content $appSettingsPath | Set-Content $devSettingsPath -Encoding UTF8
+        Write-Host "Created $devSettingsPath from $appSettingsPath"
+    }
+}
+
 Write-Host "Domain template applied. Folders, files, and contents updated."

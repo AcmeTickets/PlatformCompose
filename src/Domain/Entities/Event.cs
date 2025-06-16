@@ -1,7 +1,7 @@
-using {{DomainName}}.Domain.Events;
+using PlatformCompose.Domain.Events;
 using Newtonsoft.Json;
 
-namespace {{DomainName}}.Domain.Entities;
+namespace PlatformCompose.Domain.Entities;
 
 public class Event
 {

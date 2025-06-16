@@ -1,6 +1,6 @@
-    using {{DomainName}}.Application.Services;
+    using PlatformCompose.Application.Services;
 
-namespace {{DomainName}}.Infrastructure.Services
+namespace PlatformCompose.Infrastructure.Services
 {
     public static class NServiceBusEventPublisherAccessor
     {

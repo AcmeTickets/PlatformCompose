@@ -20,8 +20,8 @@ jobs:
     with:
       project_path: src/Api/Api.csproj
       dockerfile_path: src/Api/Dockerfile
-      image_name: ghcr.io/acmetickets/{{DomainShortName}}-api
-      target_port: {{api_port}}
+      image_name: ghcr.io/acmetickets/platformcomp-api
+      target_port: 5001
 
   deploy-api:
     needs: build-and-publish-api
@@ -29,8 +29,8 @@ jobs:
     secrets: inherit
     with:
       image_tag: ${{ needs.build-and-publish-api.outputs.image_tag }}
-      container_app_name: {{DomainShortName}}-api
-      target_port: {{api_port}}
+      container_app_name: platformcomp-api
+      target_port: 5001
 
   build-and-publish-message:
     uses: AcmeTickets/.github/.github/workflows/Build and Publish Docker Image.yml@main
@@ -38,8 +38,8 @@ jobs:
     with:
       project_path: src/Message/Message.csproj
       dockerfile_path: src/Message/Dockerfile
-      image_name: ghcr.io/acmetickets/{{DomainShortName}}-msg
-      # If there is a port for message, use {{msg_port}}
+      image_name: ghcr.io/acmetickets/platformcomp-msg
+      # If there is a port for message, use 5002
       # If there is a Cosmos DB account, use {{cosmosdb_account}}
 
   deploy-message:
@@ -48,6 +48,6 @@ jobs:
     secrets: inherit
     with:
       image_tag: ${{ needs.build-and-publish-message.outputs.image_tag }}
-      container_app_name: {{DomainShortName}}-msg
-      # If there is a port for message, use {{msg_port}}
+      container_app_name: platformcomp-msg
+      # If there is a port for message, use 5002
       # If there is a Cosmos DB account, use {{cosmosdb_account}}

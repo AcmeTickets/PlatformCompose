@@ -1,4 +1,4 @@
-namespace {{DomainName}}.Domain.Entities
+namespace PlatformCompose.Domain.Entities
 {
     public enum EventStatus
     {

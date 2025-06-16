@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using AcmeTickets.{{DomainName}}.InternalContracts.Events;
-using {{DomainName}}.Application.Commands;
-using {{DomainName}}.Application.DTOs;
-using {{DomainName}}.Application.Services;
+using AcmeTickets.PlatformCompose.InternalContracts.Events;
+using PlatformCompose.Application.Commands;
+using PlatformCompose.Application.DTOs;
+using PlatformCompose.Application.Services;
 
-namespace AcmeTickets.Domains.{{DomainName}}.Api.Controllers
+namespace AcmeTickets.Domains.PlatformCompose.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

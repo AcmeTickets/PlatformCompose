@@ -1,10 +1,10 @@
-using {{DomainName}}.Application.Commands;
-using {{DomainName}}.Application.Services;
-using {{DomainName}}.Domain.Events;
-using {{DomainName}}.Test.Mocks.Fakes;
+using PlatformCompose.Application.Commands;
+using PlatformCompose.Application.Services;
+using PlatformCompose.Domain.Events;
+using PlatformCompose.Test.Mocks.Fakes;
 using Xunit;
 
-namespace {{DomainName}}.Test.UnitTests.Application;
+namespace PlatformCompose.Test.UnitTests.Application;
 
 public class EventServiceTests
 {

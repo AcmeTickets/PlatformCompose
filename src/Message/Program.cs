@@ -1,13 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NServiceBus;
-using {{DomainName}}.Infrastructure;
+using PlatformCompose.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
-using {{DomainName}}.Application.Services;
-using {{DomainName}}.Infrastructure.Services;
-using {{DomainName}}.Domain.Repositories;
-using {{DomainName}}.Domain.Services;
+using PlatformCompose.Application.Services;
+using PlatformCompose.Infrastructure.Services;
+using PlatformCompose.Domain.Repositories;
+using PlatformCompose.Domain.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing; // For IEndpointRouteBuilder
 using Microsoft.Extensions.Diagnostics.HealthChecks; // For HealthCheckOptions
@@ -21,7 +21,7 @@ builder.Logging.AddConsole();
 // Add ASP.NET Core services for health checks
 builder.Services.AddHealthChecks();
 
-var endpointName = "{{DomainName}}.Message";
+var endpointName = "PlatformCompose.Message";
 // NServiceBus endpoint configuration
 var endpointConfig = builder.Environment.IsDevelopment()
     ? NServiceBusConfigurator.DevelopmentConfiguration(
@@ -93,7 +93,7 @@ public class NServiceBusHostedService : IHostedService
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Starting NServiceBus endpoint {{DomainName}}.Message");
+        _logger.LogInformation("Starting NServiceBus endpoint PlatformCompose.Message");
         _endpointInstance = await _endpoint.Start(_serviceProvider, cancellationToken);
         _isHealthy = true;
         _logger.LogInformation("NServiceBus endpoint started successfully");
@@ -103,7 +103,7 @@ public class NServiceBusHostedService : IHostedService
     {
         if (_endpointInstance != null)
         {
-            _logger.LogInformation("Stopping NServiceBus endpoint {{DomainName}}.Message");
+            _logger.LogInformation("Stopping NServiceBus endpoint PlatformCompose.Message");
             await _endpointInstance.Stop();
             _isHealthy = false;
             _logger.LogInformation("NServiceBus endpoint stopped successfully");

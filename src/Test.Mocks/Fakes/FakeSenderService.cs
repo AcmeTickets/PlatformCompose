@@ -1,6 +1,6 @@
-using {{DomainName}}.Application.Services;
+using PlatformCompose.Application.Services;
 
-namespace {{DomainName}}.Test.Mocks.Fakes;
+namespace PlatformCompose.Test.Mocks.Fakes;
 
 public class FakeSenderService : ISenderService
 {

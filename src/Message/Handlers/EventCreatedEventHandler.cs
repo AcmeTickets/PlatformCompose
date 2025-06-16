@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using NServiceBus;
-using {{DomainName}}.Domain.Events;
+using PlatformCompose.Domain.Events;
 
 
 namespace AcmeTickets.Message.Handlers

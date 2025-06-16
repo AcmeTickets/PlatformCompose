@@ -1,13 +1,13 @@
-using {{DomainName}}.Domain.Repositories;
-using {{DomainName}}.Domain.Services;
-using {{DomainName}}.Infrastructure.Repositories;
-using {{DomainName}}.Infrastructure.Services;
+using PlatformCompose.Domain.Repositories;
+using PlatformCompose.Domain.Services;
+using PlatformCompose.Infrastructure.Repositories;
+using PlatformCompose.Infrastructure.Services;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using {{DomainName}}.Application.Services;
+using PlatformCompose.Application.Services;
 
-namespace {{DomainName}}.Infrastructure;
+namespace PlatformCompose.Infrastructure;
 
 public static class DependencyInjection
 {

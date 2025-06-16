@@ -1,8 +1,8 @@
-using {{DomainName}}.Domain.Entities;
-using {{DomainName}}.Domain.Repositories;
+using PlatformCompose.Domain.Entities;
+using PlatformCompose.Domain.Repositories;
 using Microsoft.Azure.Cosmos;
 
-namespace {{DomainName}}.Infrastructure.Repositories;
+namespace PlatformCompose.Infrastructure.Repositories;
 
 public class EventRepository : IEventRepository
 {

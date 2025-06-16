@@ -1,4 +1,4 @@
-namespace AcmeTickets.{{DomainName}}.InternalContracts.Events
+namespace AcmeTickets.PlatformCompose.InternalContracts.Events
 {
     public class TicketRequestedEvent
     {

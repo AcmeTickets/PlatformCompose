@@ -1,7 +1,7 @@
-using {{DomainName}}.Domain.Entities;
-using {{DomainName}}.Domain.Repositories;
+using PlatformCompose.Domain.Entities;
+using PlatformCompose.Domain.Repositories;
 
-namespace {{DomainName}}.Test.Mocks.Fakes;
+namespace PlatformCompose.Test.Mocks.Fakes;
 
 public class FakeEventRepository : IEventRepository
 {

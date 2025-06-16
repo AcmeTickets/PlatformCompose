@@ -1,8 +1,8 @@
-using {{DomainName}}.Domain.Entities;
-using {{DomainName}}.Domain.Events;
+using PlatformCompose.Domain.Entities;
+using PlatformCompose.Domain.Events;
 using Xunit;
 
-namespace {{DomainName}}.Test.UnitTests.Domain;
+namespace PlatformCompose.Test.UnitTests.Domain;
 
 public class EventTests
 {

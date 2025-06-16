@@ -1,4 +1,4 @@
-namespace {{DomainName}}.Domain.Events;
+namespace PlatformCompose.Domain.Events;
 
 public abstract class DomainEvent
 {

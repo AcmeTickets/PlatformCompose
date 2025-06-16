@@ -1,0 +1,53 @@
+name: CI-CD Pipeline
+
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+  
+on:
+  push:
+    paths:
+      - 'src/Api/**'
+      - 'src/Message/**'
+  workflow_dispatch:
+
+jobs:
+  build-and-publish-api:
+    uses: AcmeTickets/.github/.github/workflows/Build and Publish Docker Image.yml@main
+    secrets: inherit
+    with:
+      project_path: src/Api/Api.csproj
+      dockerfile_path: src/Api/Dockerfile
+      image_name: ghcr.io/acmetickets/{{DomainShortName}}-api
+      target_port: {{api_port}}
+
+  deploy-api:
+    needs: build-and-publish-api
+    uses: AcmeTickets/.github/.github/workflows/Deploy API to Azure Container App.yml@main
+    secrets: inherit
+    with:
+      image_tag: ${{ needs.build-and-publish-api.outputs.image_tag }}
+      container_app_name: {{DomainShortName}}-api
+      target_port: {{api_port}}
+
+  build-and-publish-message:
+    uses: AcmeTickets/.github/.github/workflows/Build and Publish Docker Image.yml@main
+    secrets: inherit
+    with:
+      project_path: src/Message/Message.csproj
+      dockerfile_path: src/Message/Dockerfile
+      image_name: ghcr.io/acmetickets/{{DomainShortName}}-msg
+      # If there is a port for message, use {{msg_port}}
+      # If there is a Cosmos DB account, use {{cosmosdb_account}}
+
+  deploy-message:
+    needs: build-and-publish-message
+    uses: AcmeTickets/.github/.github/workflows/Deploy Messaging to Azure Container App.yml@main
+    secrets: inherit
+    with:
+      image_tag: ${{ needs.build-and-publish-message.outputs.image_tag }}
+      container_app_name: {{DomainShortName}}-msg
+      # If there is a port for message, use {{msg_port}}
+      # If there is a Cosmos DB account, use {{cosmosdb_account}}

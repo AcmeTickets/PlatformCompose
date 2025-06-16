@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 env:
-  RESOURCE_GROUP: eastus2
+  RESOURCE_GROUP: acmetickets-rg
 
 jobs:
   build-and-publish-api:

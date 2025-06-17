@@ -1,11 +1,10 @@
 name: CI-CD Pipeline
 
-
 permissions:
   contents: read
   packages: write
   id-token: write
-  
+
 on:
   push:
     paths:
@@ -15,6 +14,8 @@ on:
 
 env:
   RESOURCE_GROUP: acmetickets-rg
+  DOMAIN_SHORT_NAME: platformcomp
+  APPCONFIG_NAME: AcmeTicketsInfraConfiguration
 
 jobs:
   build-and-publish-api:
@@ -23,7 +24,7 @@ jobs:
     with:
       project_path: src/Api/Api.csproj
       dockerfile_path: src/Api/Dockerfile
-      image_name: ghcr.io/acmetickets/platformcomp-api
+      image_name: ghcr.io/acmetickets/${{ vars.DOMAIN_SHORT_NAME }}-api
       target_port: 5001
 
   deploy-api:
@@ -36,15 +37,25 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Fetch App Config Values
+        id: appconfig
+        run: |
+          az appconfig kv list --name "$APPCONFIG_NAME" --key "${DOMAIN_SHORT_NAME}:*" --query "[].{key:key, value:value}" -o tsv > config.txt
+          while IFS=$'\t' read -r key value; do
+            envname=$(echo $key | sed "s/^${DOMAIN_SHORT_NAME}://;s/__/_/g")
+            echo "$envname=$value" >> $GITHUB_ENV
+          done < config.txt
+
       - name: Deploy to Azure Container App
         env:
           IMAGE: ${{ needs.build-and-publish-api.outputs.image_tag }}
         run: |
           az containerapp update \
-            --name platformcomp-api \
+            --name ${{ env.DOMAIN_SHORT_NAME }}-api \
             --resource-group "$RESOURCE_GROUP" \
             --image "$IMAGE" \
-            --set-env-vars ASPNETCORE_ENVIRONMENT=Production AzureServiceBus__FullyQualifiedNamespace=acmeticketsasb.servicebus.windows.net COSMOSDB_ACCOUNT=platformcomposedb CosmosDb__DatabaseName=PlatformCompose CosmosDb__ContainerName=Events CosmosDb__AccountEndpoint=https://platformcomposedb.documents.azure.com:443/
+            --set-env-vars AzureServiceBus__FullyQualifiedNamespace=$AzureServiceBus__FullyQualifiedNamespace COSMOSDB_ACCOUNT=$COSMOSDB_ACCOUNT CosmosDb__DatabaseName=$CosmosDb__DatabaseName CosmosDb__ContainerName=$CosmosDb__ContainerName CosmosDb__AccountEndpoint=$CosmosDb__AccountEndpoint
 
   build-and-publish-message:
     uses: AcmeTickets/.github/.github/workflows/Build and Publish Docker Image.yml@main
@@ -52,9 +63,7 @@ jobs:
     with:
       project_path: src/Message/Message.csproj
       dockerfile_path: src/Message/Dockerfile
-      image_name: ghcr.io/acmetickets/platformcomp-msg
-      # If there is a port for message, use 5002
-      # If there is a Cosmos DB account, use {{cosmosdb_account}}
+      image_name: ghcr.io/acmetickets/${{ vars.DOMAIN_SHORT_NAME }}-msg
 
   deploy-message:
     needs: build-and-publish-message
@@ -66,12 +75,22 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Fetch App Config Values
+        id: appconfig
+        run: |
+          az appconfig kv list --name "$APPCONFIG_NAME" --key "${DOMAIN_SHORT_NAME}:*" --query "[].{key:key, value:value}" -o tsv > config.txt
+          while IFS=$'\t' read -r key value; do
+            envname=$(echo $key | sed "s/^${DOMAIN_SHORT_NAME}://;s/__/_/g")
+            echo "$envname=$value" >> $GITHUB_ENV
+          done < config.txt
+
       - name: Deploy to Azure Container App
         env:
           IMAGE: ${{ needs.build-and-publish-message.outputs.image_tag }}
         run: |
           az containerapp update \
-            --name platformcomp-msg \
+            --name ${{ env.DOMAIN_SHORT_NAME }}-msg \
             --resource-group "$RESOURCE_GROUP" \
             --image "$IMAGE" \
-            --set-env-vars ASPNETCORE_ENVIRONMENT=Production AzureServiceBus__FullyQualifiedNamespace=acmeticketsasb.servicebus.windows.net COSMOSDB_ACCOUNT=platformcomposedb CosmosDb__DatabaseName=PlatformCompose CosmosDb__ContainerName=Events CosmosDb__AccountEndpoint=https://platformcomposedb.documents.azure.com:443/
+            --set-env-vars AzureServiceBus__FullyQualifiedNamespace=$AzureServiceBus__FullyQualifiedNamespace COSMOSDB_ACCOUNT=$COSMOSDB_ACCOUNT CosmosDb__DatabaseName=$CosmosDb__DatabaseName CosmosDb__ContainerName=$CosmosDb__ContainerName CosmosDb__AccountEndpoint=$CosmosDb__AccountEndpoint

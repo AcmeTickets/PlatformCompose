@@ -24,7 +24,7 @@ jobs:
     with:
       project_path: src/Api/Api.csproj
       dockerfile_path: src/Api/Dockerfile
-      image_name: ghcr.io/acmetickets/${{ vars.DOMAIN_SHORT_NAME }}-api
+      image_name: ghcr.io/acmetickets/platformcomp-api
       target_port: 5001
 
   deploy-api:
@@ -52,7 +52,7 @@ jobs:
           IMAGE: ${{ needs.build-and-publish-api.outputs.image_tag }}
         run: |
           az containerapp update \
-            --name ${{ env.DOMAIN_SHORT_NAME }}-api \
+            --name platformcomp-api \
             --resource-group "$RESOURCE_GROUP" \
             --image "$IMAGE" \
             --set-env-vars AzureServiceBus__FullyQualifiedNamespace=$AzureServiceBus__FullyQualifiedNamespace COSMOSDB_ACCOUNT=$COSMOSDB_ACCOUNT CosmosDb__DatabaseName=$CosmosDb__DatabaseName CosmosDb__ContainerName=$CosmosDb__ContainerName CosmosDb__AccountEndpoint=$CosmosDb__AccountEndpoint
@@ -63,7 +63,7 @@ jobs:
     with:
       project_path: src/Message/Message.csproj
       dockerfile_path: src/Message/Dockerfile
-      image_name: ghcr.io/acmetickets/${{ vars.DOMAIN_SHORT_NAME }}-msg
+      image_name: ghcr.io/acmetickets/platformcomp-msg
 
   deploy-message:
     needs: build-and-publish-message
@@ -90,7 +90,7 @@ jobs:
           IMAGE: ${{ needs.build-and-publish-message.outputs.image_tag }}
         run: |
           az containerapp update \
-            --name ${{ env.DOMAIN_SHORT_NAME }}-msg \
+            --name platformcomp-msg \
             --resource-group "$RESOURCE_GROUP" \
             --image "$IMAGE" \
             --set-env-vars AzureServiceBus__FullyQualifiedNamespace=$AzureServiceBus__FullyQualifiedNamespace COSMOSDB_ACCOUNT=$COSMOSDB_ACCOUNT CosmosDb__DatabaseName=$CosmosDb__DatabaseName CosmosDb__ContainerName=$CosmosDb__ContainerName CosmosDb__AccountEndpoint=$CosmosDb__AccountEndpoint

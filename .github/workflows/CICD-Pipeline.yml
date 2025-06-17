@@ -45,7 +45,7 @@ jobs:
           echo "--- config.txt contents ---"
           cat config.txt
           while IFS=$'\t' read -r key value; do
-            envname=$(echo $key | sed "s/^${DOMAIN_SHORT_NAME}://;s/__/_/g")
+            envname=$(echo $key | sed "s/^${DOMAIN_SHORT_NAME}://")
             echo "$envname=$value" >> $GITHUB_ENV
           done < config.txt
 
@@ -90,7 +90,7 @@ jobs:
           echo "--- config.txt contents ---"
           cat config.txt
           while IFS=$'\t' read -r key value; do
-            envname=$(echo $key | sed "s/^${DOMAIN_SHORT_NAME}://;s/__/_/g")
+            envname=$(echo $key | sed "s/^${DOMAIN_SHORT_NAME}://")
             echo "$envname=$value" >> $GITHUB_ENV
           done < config.txt
 

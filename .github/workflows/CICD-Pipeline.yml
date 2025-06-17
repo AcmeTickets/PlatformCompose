@@ -49,11 +49,6 @@ jobs:
             echo "$envname=$value" >> $GITHUB_ENV
           done < config.txt
 
-      - name: Show environment variables
-        run: |
-          echo "--- Environment after setting ---"
-          env | grep -E 'AzureServiceBus|COSMOSDB_ACCOUNT|CosmosDb__DatabaseName|CosmosDb__ContainerName|CosmosDb__AccountEndpoint'
-
       - name: Deploy to Azure Container App
         env:
           IMAGE: ${{ needs.build-and-publish-api.outputs.image_tag }}
@@ -62,7 +57,7 @@ jobs:
             --name platformcomp-api \
             --resource-group "$RESOURCE_GROUP" \
             --image "$IMAGE" \
-            --set-env-vars AzureServiceBus__FullyQualifiedNamespace=$AzureServiceBus__FullyQualifiedNamespace COSMOSDB_ACCOUNT=$COSMOSDB_ACCOUNT CosmosDb__DatabaseName=$CosmosDb__DatabaseName CosmosDb__ContainerName=$CosmosDb__ContainerName CosmosDb__AccountEndpoint=$CosmosDb__AccountEndpoint
+            --set-env-vars AzureServiceBus__FullyQualifiedNamespace=$AzureServiceBus__FullyQualifiedNamespace CosmosDb__DatabaseName=$CosmosDb__DatabaseName CosmosDb__ContainerName=$CosmosDb__ContainerName CosmosDb__AccountEndpoint=$CosmosDb__AccountEndpoint
 
   build-and-publish-message:
     uses: AcmeTickets/.github/.github/workflows/Build and Publish Docker Image.yml@main
@@ -94,11 +89,6 @@ jobs:
             echo "$envname=$value" >> $GITHUB_ENV
           done < config.txt
 
-      - name: Show environment variables
-        run: |
-          echo "--- Environment after setting ---"
-          env | grep -E 'AzureServiceBus|COSMOSDB_ACCOUNT|CosmosDb__DatabaseName|CosmosDb__ContainerName|CosmosDb__AccountEndpoint'
-
       - name: Deploy to Azure Container App
         env:
           IMAGE: ${{ needs.build-and-publish-message.outputs.image_tag }}
@@ -107,4 +97,4 @@ jobs:
             --name platformcomp-msg \
             --resource-group "$RESOURCE_GROUP" \
             --image "$IMAGE" \
-            --set-env-vars AzureServiceBus__FullyQualifiedNamespace=$AzureServiceBus__FullyQualifiedNamespace COSMOSDB_ACCOUNT=$COSMOSDB_ACCOUNT CosmosDb__DatabaseName=$CosmosDb__DatabaseName CosmosDb__ContainerName=$CosmosDb__ContainerName CosmosDb__AccountEndpoint=$CosmosDb__AccountEndpoint
+            --set-env-vars AzureServiceBus__FullyQualifiedNamespace=$AzureServiceBus__FullyQualifiedNamespace CosmosDb__DatabaseName=$CosmosDb__DatabaseName CosmosDb__ContainerName=$CosmosDb__ContainerName CosmosDb__AccountEndpoint=$CosmosDb__AccountEndpoint

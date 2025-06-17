@@ -42,10 +42,14 @@ jobs:
         id: appconfig
         run: |
           az appconfig kv list --name "$APPCONFIG_NAME" --key "${DOMAIN_SHORT_NAME}:*" --query "[].{key:key, value:value}" -o tsv > config.txt
+          echo "--- config.txt contents ---"
+          cat config.txt
           while IFS=$'\t' read -r key value; do
             envname=$(echo $key | sed "s/^${DOMAIN_SHORT_NAME}://;s/__/_/g")
             echo "$envname=$value" >> $GITHUB_ENV
           done < config.txt
+          echo "--- Environment after setting ---"
+          env | grep -E 'AzureServiceBus|COSMOSDB_ACCOUNT|CosmosDb__DatabaseName|CosmosDb__ContainerName|CosmosDb__AccountEndpoint'
 
       - name: Deploy to Azure Container App
         env:
@@ -80,10 +84,14 @@ jobs:
         id: appconfig
         run: |
           az appconfig kv list --name "$APPCONFIG_NAME" --key "${DOMAIN_SHORT_NAME}:*" --query "[].{key:key, value:value}" -o tsv > config.txt
+          echo "--- config.txt contents ---"
+          cat config.txt
           while IFS=$'\t' read -r key value; do
             envname=$(echo $key | sed "s/^${DOMAIN_SHORT_NAME}://;s/__/_/g")
             echo "$envname=$value" >> $GITHUB_ENV
           done < config.txt
+          echo "--- Environment after setting ---"
+          env | grep -E 'AzureServiceBus|COSMOSDB_ACCOUNT|CosmosDb__DatabaseName|CosmosDb__ContainerName|CosmosDb__AccountEndpoint'
 
       - name: Deploy to Azure Container App
         env:
